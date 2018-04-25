@@ -96,6 +96,7 @@ class Select {
       /** Select function properties */
       const regions = Array.isArray(functionObject.regions) && functionObject.regions.length ? functionObject.regions : false
       const stages = Array.isArray(functionObject.stages) && functionObject.stages.length ? functionObject.stages : false
+      const enabled = typeof functionObject.enabled === "undefined" ? false : functionObject.enabled
 
       /** Deployment region not selected for function deployment */
       if (regions && typeof this.options.region !== 'undefined' && regions.indexOf(this.options.region) === -1) {
@@ -114,6 +115,15 @@ class Select {
         /** Reject promise if deploying one function */
         if (this.options.function) {
           return reject('Select: ' + functionName + ' not selected for deployment in ' + this.options.stage + ' stage.')
+        }
+      }
+
+      if (!enabled) {
+        delete this.serverless.service.functions[functionName]
+
+        /** Reject promise if deploying one function */
+        if (this.options.function) {
+          return reject('Select: ' + functionName + ' not selected for deployment.')
         }
       }
 
