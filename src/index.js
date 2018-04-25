@@ -96,7 +96,7 @@ class Select {
       /** Select function properties */
       const regions = Array.isArray(functionObject.regions) && functionObject.regions.length ? functionObject.regions : false
       const stages = Array.isArray(functionObject.stages) && functionObject.stages.length ? functionObject.stages : false
-      const enabled = typeof functionObject.enabled === "undefined" ? false : functionObject.enabled
+      const enabled = typeof functionObject.enabled === "undefined" ? true : functionObject.enabled
 
       /** Deployment region not selected for function deployment */
       if (regions && typeof this.options.region !== 'undefined' && regions.indexOf(this.options.region) === -1) {
